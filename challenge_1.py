@@ -1,3 +1,4 @@
+import typer
 import requests
 from lxml import html
 from rich.console import Console
@@ -5,8 +6,8 @@ import inquirer
 from http import HTTPStatus
 
 console = Console()
-EXPLOIT_SERVER="https://exploit-0ac6001d0360da0fc046211601b900f5.exploit-server.net"
-SERVER="https://0a0300bd0304da27c0ac217e00c30030.web-security-academy.net"
+EXPLOIT_SERVER="https://exploit-0a1500890457b811c0a42944010f0097.exploit-server.net"
+SERVER="https://0aa2006704f6b8fac0af292000be00ed.web-security-academy.net"
 
 def login(session, server):
     response = session.get(f"{server}/login")
@@ -120,4 +121,4 @@ def main(server=SERVER):
     
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)
