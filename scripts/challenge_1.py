@@ -1,3 +1,5 @@
+# https://portswigger.net/web-security/csrf/lab-token-validation-depends-on-request-method
+
 import typer
 import requests
 from lxml import html
@@ -6,8 +8,8 @@ import inquirer
 from http import HTTPStatus
 
 console = Console()
-EXPLOIT_SERVER="https://exploit-0a010061041e6550c12f7dd10158006a.exploit-server.net"
-SERVER="https://0acb002d04825f87c00d8e9f00e100c5.web-security-academy.net"
+EXPLOIT_SERVER="https://exploit-0a3f008a0384e44bc129102a011f005e.exploit-server.net"
+SERVER="https://0a34006f03e8e43fc1861077002b000e.web-security-academy.net"
 
 
 def login(session, server):

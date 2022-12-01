@@ -1,7 +1,9 @@
+# https://portswigger.net/web-security/os-command-injection/lab-blind-output-redirection
+
 import requests
 from lxml import html
 from rich.console import Console
-
+import typer
 
 console = Console()
 
@@ -41,4 +43,4 @@ def main(server=SERVER):
     get_file(server)
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)
