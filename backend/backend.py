@@ -1,5 +1,7 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
+import os
+
 
 app = Flask(__name__)
 
@@ -25,31 +27,40 @@ def upload_file():
             return 'No selected file'
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(filename)
+            file.save("img/"+filename)
             return 'File uploaded!'
-#     if request.method == 'GET':
-#         for file in uploaded
 
-# @app.route('/upload/{filename}', methods=['GET', 'POST'])
-# def return_file():
+
+@app.route("/show_image/<string:file>")
+def show_image(file):
+    image_path = os.path.join(app.config['img'], file)
+    return render_template("image.html", user_image = image_path)
+
+
+@app.route('/images')
+def images():
+    path = '<Path_to_folder>'
+    files = os.listdir(path)
+    return render_template('folder_images.html', files=files)
+
 
 
 @app.route('/', methods=["GET"])
 def home():
     return """
     <!DOCTYPE html>
-<html>
-    <head>
-        <title>File Upload</title>
-    </head>
-    <body>
-        <h1>Upload your File</h1>
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <input type="submit" value="Upload">
-        </form>
-    </body>
-</html>
+    <html>
+        <head>
+            <title>File Upload</title>
+        </head>
+        <body>
+            <h1>Upload your File</h1>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input type="submit" value="Upload">
+            </form>
+        </body>
+    </html>
     """
 
 
