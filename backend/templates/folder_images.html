@@ -1,9 +1,14 @@
-<!DOCTYPE html>
+
 <html>
-<head>
-    <title>Index</title>
-</head>
-<body>
-    <img src="{{ user_image }}" alt="User Image">
-</body>
+    <head>
+        <title>Files in the Directory</title>
+    </head>
+    <body>
+        <h2>Files in the Directory</h2>
+        <ul>
+            {% for file in files %}
+            <a href="http://127.0.0.1:5000/static/img/{{file}}"><li>{{ file }}</li></a>
+            {% endfor %}
+        </ul>
+    </body>
 </html>

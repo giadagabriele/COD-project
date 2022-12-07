@@ -2,8 +2,10 @@ from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 import os
 
+IMG_FOLDER = os.path.join('static', 'img')
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = IMG_FOLDER
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -27,19 +29,15 @@ def upload_file():
             return 'No selected file'
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save("img/"+filename)
+            file.save("static/img/"+filename)
             return 'File uploaded!'
-
-
-@app.route("/show_image/<string:file>")
-def show_image(file):
-    image_path = os.path.join(app.config['img'], file)
-    return render_template("image.html", user_image = image_path)
+        else:
+            return 'File not accepted'
 
 
 @app.route('/images')
 def images():
-    path = '<Path_to_folder>'
+    path = 'static/img/'
     files = os.listdir(path)
     return render_template('folder_images.html', files=files)
 
