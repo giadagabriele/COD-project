@@ -2,10 +2,9 @@ from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 import os
 
-IMG_FOLDER = os.path.join('static', 'img')
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = IMG_FOLDER
+
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -27,12 +26,13 @@ def upload_file():
         # submit a empty part without filename
         if file.filename == '':
             return 'No selected file'
-        if file and allowed_file(file.filename):
+        elif file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save("static/img/"+filename)
-            return 'File uploaded!'
-        else:
-            return 'File not accepted'
+            return 'File uploaded!'+images()
+            
+        elif file and not allowed_file(file.filename):
+            return 'File not accepted'+home()
 
 
 @app.route('/images')
@@ -53,7 +53,7 @@ def home():
         </head>
         <body style="max-width: max-content; margin: auto; margin-top: 100px">
             <h1 style="color: red; font-family: Arial, Helvetica, sans-serif;">Upload your File</h1>
-            <form method="POST" enctype="multipart/form-data">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file">
                 <br><br>
                 <input style="height:40px; width:250px;" type="submit" value="Upload">
