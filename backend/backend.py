@@ -10,7 +10,6 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 
 def allowed_file(filename):
-    print(filename.split('.')[1].lower())
     return '.' in filename and \
            filename.split('.')[1].lower() in ALLOWED_EXTENSIONS
 
