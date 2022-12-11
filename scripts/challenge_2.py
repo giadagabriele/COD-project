@@ -8,7 +8,7 @@ import typer
 console = Console()
 
 
-SERVER="https://0ab300830375863cc1695a6000640090.web-security-academy.net"
+SERVER="https://0a9800a704d43178c0d269e400870057.web-security-academy.net"
 ENDPOINT="/feedback/submit"
 
 def injectable_params(server, session):
@@ -45,7 +45,7 @@ def injectable_params(server, session):
 
                 if response.status_code == 200:
                     response=requests.get(f"{server}/image?filename=exploit_"+key+".txt")
-                    style = "bold white on yellow"
+                    style = "bold white on blue"
                     console.print("Command Get response = "+ response.text, style=style, justify="left")
 
             params[key] = tmp

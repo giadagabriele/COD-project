@@ -8,8 +8,9 @@ import inquirer
 from http import HTTPStatus
 
 console = Console()
-EXPLOIT_SERVER="https://exploit-0a7000c2033b6db8c0e883d201e1009b.exploit-server.net"
-SERVER="https://0a55005d039a6d29c06981750089007e.web-security-academy.net"
+EXPLOIT_SERVER="https://exploit-0a63001d03a1d344c03fbf8d01150077.exploit-server.net"
+SERVER="https://0a4100f603fcd3b1c0e0bd4300ad00bf.web-security-academy.net"
+
 
 
 def login(session, server):
