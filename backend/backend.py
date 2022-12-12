@@ -2,6 +2,9 @@ from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 import os
 
+# export FLASK_APP=backend.py
+# export FLASK_ENV=development
+
 
 app = Flask(__name__)
 
@@ -17,12 +20,9 @@ def allowed_file(filename):
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # check if the post request has the file part
         if 'file' not in request.files:
             return 'No file part'
         file = request.files['file']
-        # if user does not select file, browser also
-        # submit a empty part without filename
         if file.filename == '':
             return 'No selected file'
         elif file and allowed_file(file.filename):
