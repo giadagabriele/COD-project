@@ -8,7 +8,7 @@ import typer
 console = Console()
 
 
-SERVER="https://0a9800a704d43178c0d269e400870057.web-security-academy.net"
+SERVER="https://0a8c00d703205058c21426a200580008.web-security-academy.net"
 ENDPOINT="/feedback/submit"
 
 def injectable_params(server, session):
@@ -17,7 +17,6 @@ def injectable_params(server, session):
     console.log(f"Get status code {response.status_code}")
     html_document = html.fromstring(response.content)
     csrf_token = html_document.xpath("//input[@name = 'csrf']/@value")[0]
-    console.log(f"CSRF Token = {csrf_token}")
     
     separators = ["&&", "||", "&", "|", "`"]
     
