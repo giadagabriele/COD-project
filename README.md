@@ -17,3 +17,6 @@ https://github.com/pallets/flask |
 2. export FLASK_ENV=development
 3. flask run
 ```
+<br>
+
+#### You can find a brief explanation of our work <a href="https://github.com/giadagabriele/COD-project/blob/main/COD-project_presentation.pdf">here</a>
