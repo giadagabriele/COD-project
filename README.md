@@ -1,5 +1,5 @@
 # COD-project
-Cyber Offense and Defense Project - Università della Calabria
+***Cyber Offense and Defense Project - Università della Calabria***
 #### Chosen challenges from PortSwigger:
 Client-side - <a href="https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-validation-depends-on-request-method">CSRF where token validation depends on request method</a> <br>
 Server-side - <a href="https://portswigger.net/web-security/os-command-injection/lab-blind-output-redirection">Blind OS command injection with output redirection</a> <br>
